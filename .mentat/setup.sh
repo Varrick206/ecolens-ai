@@ -1,21 +1,32 @@
 #!/bin/bash
 
-# Check if we can create a virtual environment
-if ! python3 -m venv --help &> /dev/null; then
-    echo "Error: python3-venv is not installed. Please install it with:"
+# Try to create virtual environment
+echo "Creating virtual environment..."
+if ! python3 -m venv .venv; then
+    echo "Error: Failed to create virtual environment. Please ensure python3-venv is installed:"
     echo "  On Debian/Ubuntu: apt-get install python3-venv"
     echo "  On RHEL/CentOS: yum install python3-venv"
     echo "  On macOS: brew install python3"
     exit 1
 fi
 
-# Create virtual environment if it doesn't exist
-if [ ! -d ".venv" ]; then
-    python3 -m venv .venv
+# Verify virtual environment was created
+if [ ! -f ".venv/bin/activate" ]; then
+    echo "Error: Virtual environment creation failed"
+    exit 1
 fi
 
 # Activate virtual environment
+echo "Activating virtual environment..."
 source .venv/bin/activate
+
+# Verify activation worked
+if [ -z "$VIRTUAL_ENV" ]; then
+    echo "Error: Virtual environment activation failed"
+    exit 1
+fi
+
+echo "Installing packages..."
 
 # Upgrade pip
 python3 -m pip install --upgrade pip
@@ -32,3 +43,5 @@ fi
 
 # Install common development tools
 python3 -m pip install black ruff mypy isort pytest
+
+echo "Setup completed successfully!"
