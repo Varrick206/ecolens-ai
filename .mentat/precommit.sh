@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# Activate virtual environment
-source .venv/bin/activate
-
 # Format code
-black .
-isort .
+python3 -m black .
+python3 -m isort .
 
 # Run linting with auto-fix
-ruff check --fix .
+python3 -m ruff check --fix .
 
 # Type checking
-mypy .
+python3 -m mypy .
