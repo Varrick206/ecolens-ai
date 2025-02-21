@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Install system dependencies
+if command -v apt-get &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y python3-venv
+fi
+
 # Create virtual environment if it doesn't exist
 python3 -m venv .venv
 
