@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 echo "Installing packages..."
 
 # Upgrade pip
@@ -24,3 +27,9 @@ echo "Note: For local development, it's recommended to use a virtual environment
 echo "  python3 -m venv .venv"
 echo "  source .venv/bin/activate  # On Unix/macOS"
 echo "  .venv\Scripts\activate     # On Windows"
+
+# Create an example Python file to verify tools work
+cat > example.py << 'EOF'
+def hello():
+    print("Hello, World!")
+EOF
